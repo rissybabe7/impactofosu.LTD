@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Impact Ofosu LTD - Logistics Company</title>
+<style>
+  /* Reset */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:url(plent.PNG);
+    background-size:cover ;
+    color: #000;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  a {
+    color: #ff6600; /* orange */
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  a:hover, a:focus {
+    color: #000;
+    outline: none;
+  }
+
+  header {
+    background: url(plent.PNG);
+    background-position: center;
+    background-size: cover;
+    color: #fff;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+
+  header h1 {
+    font-size: 1.9rem;
+    letter-spacing: 1px;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+  }
+
+  nav a {
+    margin-left: 1.5rem;
+    font-weight: 600;
+    position: relative;
+    padding: 0.3rem 0;
+  }
+
+  nav a::after {
+    content: "";
+    position: absolute;
+    height: 3px;
+    width: 0;
+    background-color: #ff6600; /* orange underline */
+    bottom: -2px;
+    left: 0;
+    transition: width 0.3s ease;
+    border-radius: 2px;
+  }
+
+  nav a:hover::after,
+  nav a:focus::after,
+  nav a.active::after {
+    width: 100%;
+  }
+
+  #menu-toggle {
+    display: none;
+  }
+
+  #menu-label {
+    display: none;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  /* Mobile navigation */
+  @media (max-width: 768px) {
+    nav {
+      display: none;
+      position: fixed;
+      top: 70px;
+      right: 0;
+      background:url(0bb493c3bf38e9c8232c4e6fc9049a5e.jpg);
+      background-size:cover ;
+      flex-direction: column;
+      width: 240px;
+      max-height: calc(100vh - 70px);
+      overflow-y: auto;
+      padding: 1rem 1.5rem;
+      border-radius: 0 0 0 8px;
+      box-shadow: -4px 0 12px rgba(0,0,0,0.7);
+      z-index: 9999;
+    }
+    nav a {
+      margin: 1rem 0;
+      font-size: 1.3rem;
+      margin-left: 0;
+      color: #ff6600;
+    }
+    nav a:hover, nav a:focus {
+      color: #fff;
+    }
+    #menu-toggle:checked + nav {
+      display: flex;
+    }
+    #menu-label {
+      display: block;
+    }
+    body.menu-open {
+      overflow: hidden;
+    }
+  }
+
+  .hero {
+    background: url(0bb493c3bf38e9c8232c4e6fc9049a5e.jpg);
+    background-position:center;
+    background-size: cover;
+    height: 65vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+    padding: 2rem 1rem;
+    position: relative;
+  }
+
+  .hero h2 {
+    font-size: 2.8rem;
+    max-width: 800px;
+    line-height: 1.1;
+    font-weight: 700;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.9);
+  }
+
+  main {
+    max-width: 1150px;
+    margin: 3rem auto 2rem;
+    padding: 0 1.2rem;
+    flex-grow: 1;
+  }
+
+  /* Section Styling */
+  section {
+    background:url(0bb493c3bf38e9c8232c4e6fc9049a5e.jpg);
+    display: block;
+    background-size:cover ;
+    border-radius: 12px;
+    padding: 2rem 2.5rem;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    margin-bottom: 3.5rem;
+    transition: box-shadow 0.3s ease;
+  }
+
+  section:hover, section:focus-within {
+    box-shadow: 0 12px 34px rgba(0,0,0,0.25);
+  }
+
+  section h3 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    color: #000;
+    border-bottom: 4px solid #ff6600;
+    display: inline-block;
+    padding-bottom: 0.3rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* Services grid */
+  .services-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+    gap: 1.6rem;
+  }
+
+  .service-item {
+    background: url(plent.PNG);
+    padding: 1.9rem 1.6rem;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgb(0 0 0 / 0.2);
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    color: #fff;
+    font-weight: 600;
+    overflow: hidden;
+  }
+
+  .service-item:focus, .service-item:hover {
+    background: url(air.PNG);
+    transform: translateY(-8px);
+    box-shadow: 0 10px 24px rgb(0 0 0 / 0.3);
+    outline: none;
+  }
+  .service-item h4 {
+    font-size: 1.35rem;
+    margin-bottom: 0.8rem;
+    color: #fff;
+  }
+  .service-item p {
+    flex-grow: 1;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  .service-item::before {
+    content: "✓";
+    font-size: 2rem;
+    font-weight: bold;
+    color: rgba(255,255,255,0.3);
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    pointer-events: none;
+  }
+
+  /* About section paragraph */
+  .about p {
+    font-size: 1.15rem;
+    color: #111;
+    max-width: 900px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Testimonials */
+  .testimonials-list {
+    position: relative;
+    overflow: hidden;
+    max-width: 720px;
+    margin: 1rem auto 0 auto;
+    border-radius: 12px;
+    background: #fff3e0; /* light orange background */
+    box-shadow: 0 8px 22px rgba(0,0,0,0.2);
+    padding: 2rem 3rem 3rem 3rem;
+    color: #000;
+  }
+
+  .testimonial {
+    display: none;
+    text-align: center;
+    font-style: italic;
+    font-size: 1.25rem;
+    min-height: 140px;
+  }
+
+  .testimonial.active {
+    display: block;
+    animation: fadeIn 0.7s ease forwards;
+  }
+
+  .testimonial-author {
+    margin-top: 1.3rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #000;
+  }
+
+  .testimonial-controls {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1.4rem;
+  }
+
+  .testimonial-controls button {
+    background: #000;
+    color: #ff6600;
+    border: none;
+    padding: 0.59rem 1.2rem;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.6rem;
+    line-height: 1;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .testimonial-controls button:hover, 
+  .testimonial-controls button:focus {
+    background-color: #ff6600;
+    color: #000;
+    outline: none;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+
+  /* Contact Info */
+  .contact-info {
+    max-width: 640px;
+    margin: 0 auto 2rem auto;
+    text-align: center;
+    font-size: 1.15rem;
+    color: #000;
+    font-weight: 600;
+  }
+
+  .contact-info strong {
+    display: block;
+    margin-top: 1.1rem;
+    font-size: 1.25rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .contact-info span, .contact-info a {
+    display: block;
+    margin-top: 0.35rem;
+    font-weight: 500;
+    color: #ff6600;
+    transition: color 0.3s ease;
+  }
+
+  .contact-info a:hover, .contact-info a:focus {
+    color: #000;
+    outline: none;
+  }
+
+  address {
+    font-style: normal;
+    font-weight: 500;
+    margin-top: 0.4rem;
+    color: #000;
+    line-height: 1.3;
+  }
+
+  /* Contact form */
+  form {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 0.45rem;
+    font-weight: 700;
+    color: #000;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+    border: 1.8px solid #000;
+    border-radius: 9px;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: border-color 0.2s ease, background-color 0.3s ease;
+    font-family: inherit;
+    resize: vertical;
+    box-shadow: none;
+    background-color: #fff;
+    color: #000;
+  }
+
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="tel"]:focus,
+  textarea:focus {
+    outline: none;
+    border-color: #ff6600;
+    box-shadow: 0 0 12px #ff6600cc;
+  }
+
+  button {
+    background-color: #000;
+    color: #ff6600;
+    border: 2.5px solid #ff6600;
+    padding: 0.95rem 2.2rem;
+    border-radius: 7px;
+    font-size: 1.18rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(255,102,0,0.3);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+  }
+
+  button:hover, button:focus {
+    background-color: #ff6600;
+    box-shadow: 0 6px 22px rgba(255,102,0,0.7);
+    color: #000;
+    border-color: #000;
+    outline: none;
+  }
+
+  #form-messages {
+    min-height: 1.7em;
+    margin-top: 0.8rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+
+  /* Form small help text */
+  small {
+    color: #000;
+    font-size: 0.91rem;
+    display: block;
+    margin-top: -1rem;
+    margin-bottom: 1rem;
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  /* Scroll to top button */
+  #scrollTopBtn {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    background-color: #000;
+    color: #ff6600;
+    border: none;
+    padding: 0.75rem 0.9rem;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    font-size: 1.8rem;
+    box-shadow: 0 8px 20px rgba(255,102,0,0.7);
+    z-index: 9999;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  #scrollTopBtn:hover, #scrollTopBtn:focus {
+    background-color: #ff6600;
+    color: #000;
+    outline: none;
+  }
+
+  /* Footer */
+  footer {
+    background-color: #000;
+    color: #ff6600;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  /* Accessibility focus style */
+  .focus-visible:focus-visible {
+    outline: 3px solid #ff6600;
+    outline-offset: 3px;
+  }
+
+  /* Animated underline for nav active links on scroll */
+  nav a.active::after {
+    width: 100%;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1 tabindex="0">Impact Ofosu LTD</h1>
+  <label for="menu-toggle" id="menu-label" tabindex="0" aria-label="Toggle navigation menu" aria-controls="primary-navigation">&#9776;</label>
+  <input type="checkbox" id="menu-toggle" aria-hidden="true" />
+  <nav role="navigation" aria-label="Primary Navigation" id="primary-navigation">
+    <a href="#services" class="focus-visible">Services</a>
+    <a href="#about" class="focus-visible">About Us</a>
+    <a href="#testimonials" class="focus-visible">Testimonials</a>
+    <a href="#contact" class="focus-visible">Contact</a>
+  </nav>
+</header>
+
+<section class="hero" aria-label="Company introduction">
+  <h2>Your Trusted Partner in Logistics and Freight Solutions</h2>
+</section>
+
+<main>
+  <section id="services" class="services" aria-labelledby="services-heading">
+    <h3 id="services-heading">Our Services</h3>
+    <div class="services-list" role="list" aria-label="List of services">
+      <div class="service-item focus-visible" tabindex="0" role="listitem" aria-describedby="desc1">
+        <h4>Freight Forwarding</h4>
+        
+        <p id="desc1">Efficient and reliable freight forwarding services by air, sea, and land worldwide.</p>
+      </div>
+      <div class="service-item focus-visible" tabindex="0" role="listitem" aria-describedby="desc2">
+        <h4>Warehousing</h4>
+        <p id="desc2">Secure and state-of-the-art warehousing solutions tailored to your business needs.</p>
+      </div>
+      <div class="service-item focus-visible" tabindex="0" role="listitem" aria-describedby="desc3">
+        <h4>Supply Chain Management</h4>
+        <p id="desc3">Optimizing your supply chain with integrated logistics for maximum efficiency.</p>
+      </div>
+      <div class="service-item focus-visible" tabindex="0" role="listitem" aria-describedby="desc4">
+        <h4>Customs Clearance</h4>
+        <p id="desc4">Comprehensive customs clearance support ensuring smooth, compliant shipments.</p>
+      </div>
+      <div class="service-item focus-visible" tabindex="0" role="listitem" aria-describedby="desc5">
+        <h4>Express Delivery</h4>
+        <p id="desc5">Fast and secure express delivery solutions for time-sensitive shipments.</p>
+      </div>
+      <div class="service-item focus-visible" tabindex="0" role="listitem" aria-describedby="desc6">
+        <h4>Tracking & Reporting</h4>
+        <p id="desc6">Real-time shipment tracking and detailed reporting for full visibility.</p>
+      </div>
+      <div class="service-item focus-visible" tabindex="0" role="listitem" aria-describedby="desc7">
+        <h4>Packaging Solutions</h4>
+        <p id="desc7">Customized and sustainable packaging options to protect your goods.</p>
+      </div>
+      <div class="service-item focus-visible" tabindex="0" role="listitem" aria-describedby="desc8">
+        <h4>Consulting Services</h4>
+        <p id="desc8">Expert logistics consulting tailored to optimize your business operations.</p>
+      </div>
+    </div>
+  </section>
+  
+  <section id="about" class="about" aria-labelledby="about-heading">
+    <h3 id="about-heading">About Impact Ofosu LTD</h3>
+   <p>We manage all the necessary documentation,customs procedures and logistics involved in transporting cargo from the port to destination.We export goods around the world by sea or air freight.
+    We export goods around the world by sea or air freight.We negotiate with various carriers shipping lines, airlines, trucking companies to secure the best rates and ensure timely delivery.We handle electronic documentation and communications with customs authorities and other parties involved in the process.We ensure efficient and cost effective transportation of goods.
+  </p>
+  </section>
+
+  <section id="testimonials" class="testimonials" aria-labelledby="testimonials-heading" aria-live="polite" aria-atomic="true" aria-relevant="additions">
+    <h3 id="testimonials-heading">Client Testimonials</h3>
+    <div class="testimonials-list" role="region" aria-label="Testimonials slider" tabindex="0">
+      <div class="testimonial active" role="group" aria-roledescription="slide" aria-label="Testimonial 1">
+        <p>"Impact Ofosu LTD provided excellent support and timely delivery. They streamlined our logistics process and reduced our costs significantly."</p>
+        <p class="testimonial-author">- Mary Johnson, CEO of SupplyX</p>
+      </div>
+      <div class="testimonial" role="group" aria-roledescription="slide" aria-label="Testimonial 2">
+        <p>"Reliable, professional, and always available. Their warehousing solutions helped our business scale efficiently."</p>
+        <p class="testimonial-author">- David Mensah, Logistics Manager at FreshFoods</p>
+      </div>
+      <div class="testimonial" role="group" aria-roledescription="slide" aria-label="Testimonial 3">
+        <p>"Seamless customs clearance and real-time tracking — Impact Ofosu LTD is simply the best logistics partner we've had."</p>
+        <p class="testimonial-author">- Linda Appiah, Operations Director at TechGear</p>
+      </div>
+      <div class="testimonial" role="group" aria-roledescription="slide" aria-label="Testimonial 4">
+        <p>"Their consulting services helped us optimize our supply chain, saving both time and money."</p>
+        <p class="testimonial-author">- Kwame Nkrumah, COO of Africargo</p>
+      </div>
+    </div>
+    <div class="testimonial-controls" role="group" aria-label="Testimonials navigation">
+      <button type="button" aria-controls="testimonials" aria-label="Previous testimonial" id="prevTestimonial">&#10094;</button>
+      <button type="button" aria-controls="testimonials" aria-label="Next testimonial" id="nextTestimonial">&#10095;</button>
+    </div>
+  </section>
+
+  <section id="contact" class="contact" aria-labelledby="contact-heading">
+    <h3 id="contact-heading">Contact Us</h3>
+
+    <div class="contact-info" aria-label="Contact phone numbers and email">
+      <strong>Phone Numbers:</strong>
+      <span><a href="tel:+233240288478" aria-label="Call +233 240 288 478">+233 240 288 478</a></span>
+      <span><a href="tel:+233272898383" aria-label="Call +233 272 898 383">+233 272 898 383</a></span>
+      <strong>Email Address:</strong>
+      <a href="mailto:stephenofosu45@gmail.com" aria-label="Email stephenofosu45@gmail.com" target="_blank" rel="noopener noreferrer">stephenofosu45@gmail.com</a>
+      <strong>Office Address:</strong>
+      <address>
+        Black Star Line Building,<br />
+        Meridian Road,<br />
+        Community 1 One,<br />
+        Tema, Ghana<br />
+        <a href="https://google/maps/HDRXGFctHM5VPTx18" target="_blank" rel="noopener noreferrer" aria-label="Open location on Google Maps">View on Google Maps</a>
+      </address>
+    </div>
+
+    <form id="contactForm" aria-describedby="form-messages" novalidate>
+      <label for="name">Name<span aria-hidden="true"></span>:</label>
+      <input type="text" id="name" name="name" required aria-required="true" minlength="2" autocomplete="name" placeholder="Your full name" />
+
+      <label for="email">Email<span aria-hidden="true"></span>:</label>
+      <input type="email" id="email" name="email" required aria-required="true" autocomplete="email" placeholder="name@example.com" />
+
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" name="phone" pattern="^\+?\d{8,15}$" placeholder="+233240288478" aria-describedby="phoneHelp" autocomplete="tel" />
+      <small id="phoneHelp">Optional. Format: +CountryCode Number</small>
+
+      <label for="subject">Subject<span aria-hidden="true"></span>:</label>
+      <input type="text" id="subject" name="subject" required aria-required="true" minlength="5" placeholder="Subject of your message" />
+
+      <label for="message">Message<span aria-hidden="true"></span>:</label>
+      <textarea id="message" name="message" rows="6" required aria-required="true" minlength="10" placeholder="Write your message here..."></textarea>
+
+      <!-- CAPTCHA simulation -->
+      <div id="captcha-container" style="margin-bottom:1rem;">
+        <label for="captcha" aria-label="Captcha verification">What is 3 + 7? <span aria-hidden="true"></span></label>
+        <input type="text" id="captcha" name="captcha" required aria-required="true" autocomplete="off" placeholder="Your answer" />
+        <small>Please answer this simple question to prove you're not a robot.</small>
+      </div>
+
+      <button type="submit" aria-live="polite">Send Message</button>
+      <p id="form-messages" role="alert" aria-live="assertive" aria-atomic="true"></p>
+    </form>
+  </section>
+
+  <section id="map" aria-label="Company location map" style="max-width:900px; margin: 0 auto 3rem; border-radius: 14px; overflow:hidden; box-shadow: 0 10px 36px rgba(0,0,0,0.2);">
+    <iframe
+      title="Impact Ofosu LTD Location Map"
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.729953193825!2d0.019054815028906536!3d5.667313995740085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf8ef115a0df45%3A0xd8137cd07f5c69f6!2sBlack%20Star%20Line%20Building%2C%20Tema%2C%20Ghana!5e0!3m2!1sen!2sgh!4v1696281197453!5m2!1sen!2sgh"
+      width="100%"
+      height="350"
+      style="border:0;"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </section>
+</main>
+
+<button id="scrollTopBtn" aria-label="Scroll to top" title="Scroll to top">&#8679;</button>
+
+<footer>
+  &copy; 2024 Impact Ofosu LTD. All rights reserved.
+</footer>
+
+<script>
+  // Accessibility - add focus-visible class
+  (() => {
+    function handleFirstTab(e) {
+      if (e.key === 'Tab') {
+        document.body.classList.add('user-is-tabbing');
+        window.removeEventListener('keydown', handleFirstTab);
+      }
+    }
+    window.addEventListener('keydown', handleFirstTab);
+  })();
+
+  // Mobile menu toggle accessibility fix (lock body scroll)
+  const menuToggle = document.getElementById('menu-toggle');
+  const body = document.body;
+  const menuLabel = document.getElementById('menu-label');
+
+  menuToggle.addEventListener('change', () => {
+    if (menuToggle.checked) {
+      body.classList.add('menu-open');
+      menuLabel.setAttribute('aria-expanded', 'true');
+    } else {
+      body.classList.remove('menu-open');
+      menuLabel.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  menuLabel.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      menuToggle.checked = !menuToggle.checked;
+      const changeEvent = new Event('change');
+      menuToggle.dispatchEvent(changeEvent);
+    }
+  });
+
+  // Smooth scrolling and active nav link update
+  const navLinks = document.querySelectorAll('nav a');
+  const sections = [];
+
+  navLinks.forEach(link => {
+    const targetId = link.getAttribute('href').slice(1);
+    const section = document.getElementById(targetId);
+    if(section) sections.push(section);
+
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Close mobile menu on navigation
+      if (menuToggle.checked) {
+        menuToggle.checked = false;
+        body.classList.remove('menu-open');
+      }
+    });
+  });
+
+  // Highlight nav link on scroll
+  window.addEventListener('scroll', () => {
+    let scrollPos = window.scrollY || window.pageYOffset;
+    // Offset for fixed header height (70px)
+    scrollPos += 80;
+
+    let current = null;
+    sections.forEach(section => {
+      if(scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
+        current = section.id;
+      }
+    });
+
+    navLinks.forEach(link => {
+      if(link.getAttribute('href').slice(1) === current) {
+        link.classList.add('active');
+        link.setAttribute('aria-current', 'page');
+      } else {
+        link.classList.remove('active');
+        link.removeAttribute('aria-current');
+      }
+    });
+  });
+
+  // Scroll to top button
+  const scrollBtn = document.getElementById('scrollTopBtn');
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 400) {
+      scrollBtn.style.display = 'block';
+    } else {
+      scrollBtn.style.display = 'none';
+    }
+  });
+
+  scrollBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // Testimonials slider logic
+  const testimonials = document.querySelectorAll('.testimonial');
+  const prevBtn = document.getElementById('prevTestimonial');
+  const nextBtn = document.getElementById('nextTestimonial');
+  let currentTestimonial = 0;
+  let testimonialAutoplay = true;
+  let intervalId;
+
+  function setTestimonial(index) {
+    testimonials.forEach((el, i) => {
+      el.classList.toggle('active', i === index);
+      el.setAttribute('aria-hidden', i !== index);
+    });
+    currentTestimonial = index;
+  }
+
+  function nextTestimonialFunc() {
+    setTestimonial((currentTestimonial + 1) % testimonials.length);
+  }
+
+  function prevTestimonialFunc() {
+    setTestimonial((currentTestimonial - 1 + testimonials.length) % testimonials.length);
+  }
+
+  prevBtn.addEventListener('click', () => {
+    prevTestimonialFunc();
+    resetAutoplay();
+  });
+
+  nextBtn.addEventListener('click', () => {
+    nextTestimonialFunc();
+    resetAutoplay();
+  });
+
+  // Keyboard controls for testimonials
+  document.getElementById('testimonials').addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') {
+      nextTestimonialFunc();
+      resetAutoplay();
+      e.preventDefault();
+    } else if (e.key === 'ArrowLeft') {
+      prevTestimonialFunc();
+      resetAutoplay();
+      e.preventDefault();
+    }
+  });
+
+  function startAutoplay() {
+    intervalId = setInterval(() => {
+      if(testimonialAutoplay) {
+        nextTestimonialFunc();
+      }
+    }, 7000);
+  }
+
+  function resetAutoplay() {
+    testimonialAutoplay = false;
+    clearInterval(intervalId);
+    setTimeout(() => {
+      testimonialAutoplay = true;
+    }, 15000);
+  }
+
+  setTestimonial(0);
+  startAutoplay();
+
+  // Contact form validation and simulated submission
+  const form = document.getElementById('contactForm');
+  const messages = document.getElementById('form-messages');
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    messages.textContent = '';
+    messages.style.color = "";
+
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const phone = form.phone.value.trim();
+    const subject = form.subject.value.trim();
+    const messageText = form.message.value.trim();
+    const captcha = form.captcha.value.trim();
+
+    // Basic validation
+    if(name.length < 2) return showError('Please enter your full name (min 2 characters).', form.name);
+    if(!validateEmail(email)) return showError('Please enter a valid email address.', form.email);
+    if(phone && !validatePhone(phone)) return showError('Invalid phone format. Use e.g. +233240288478.', form.phone);
+    if(subject.length < 5) return showError('Subject must be at least 5 characters.', form.subject);
+    if(messageText.length < 10) return showError('Message must contain at least 10 characters.', form.message);
+    if(captcha !== "10") return showError('Wrong CAPTCHA answer. Please try again.', form.captcha);
+
+    setFormDisabled(true);
+    messages.textContent = "Sending your message...";
+    messages.style.color = "#000";
+
+    setTimeout(() => {
+      messages.textContent = "Thank you for reaching out to Impact Ofosu LTD. We will contact you shortly!";
+      messages.style.color = "orange";
+      form.reset();
+      setFormDisabled(false);
+    }, 1800);
+  });
+
+  function showError(message, element) {
+    messages.textContent = message;
+    messages.style.color = 'red';
+    element.focus();
+  }
+
+  function setFormDisabled(state) {
+    Array.from(form.elements).forEach(el => el.disabled = state);
+  }
+
+  function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email.toLowerCase());
+  }
+
+  function validatePhone(phone) {
+    // Allow digits, spaces, +, () and minimum digits 8
+    const digits = phone.replace(/\D/g, '');
+    const phoneRegex = /^\+?[\d\s\-\(\)]+$/;
+    return phoneRegex.test(phone) && digits.length >=8;
+  }
+</script>
+</body>
+</html>
