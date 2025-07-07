@@ -14,7 +14,11 @@
     padding: 0;
   }
 
-  body {
+  html, body {
+  overflow-x: hidden;
+}
+
+body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background:url(plent.PNG);
     background-size:cover ;
@@ -717,8 +721,6 @@ header {
 
 </head>
 <body>
-<button class="dark-toggle" onclick="toggleDarkMode()">🌙 Dark Mode</button>
-
 <div id="preloader">
   <div class="spinner"></div>
 </div>
@@ -832,13 +834,7 @@ header {
       </address>
     </div>
 
-    <form action="https://formsubmit.co/stephenofosu45@gmail.com" method="POST" id="contactForm" aria-describedby="form-messages" data-aos="fade-up" data-aos-delay="200">
-  <!-- Hidden fields for FormSubmit options -->
-  <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_template" value="table">
-  <input type="hidden" name="_autoresponse" value="Thank you for contacting Impact Ofosu LTD. We will reply shortly.">
-  <input type="hidden" name="_subject" value="New Contact Form Submission">
-  <input type="hidden" name="_next" value="https://thankyou-page.example.com">
+    <form id="contactForm" aria-describedby="form-messages" novalidate data-aos="fade-up" data-aos-delay="200">
       <label for="name">Name<span aria-hidden="true"></span>:</label>
       <input type="text" id="name" name="name" required aria-required="true" minlength="2" autocomplete="name" placeholder="Your full name" />
 
@@ -869,7 +865,48 @@ header {
 <div id="successModal" class="success-modal">✅ Message sent successfully!</div>
 <p id="formStatus" style="color: green;"></p>
 
+<script>
+document.getElementById("contactForm")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const btn = document.getElementById("sendBtn");
+  const status = document.getElementById("formStatus");
+  const modal = document.getElementById("successModal");
 
+  btn.classList.add("sending");
+  btn.textContent = "Sending...";
+
+  const formData = {
+    name: form.name.value,
+    email: form.email.value,
+    message: form.message.value,
+  };
+
+  try {
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+
+    if (res.ok) {
+      status.textContent = "";
+      form.reset();
+      modal.style.display = "block";
+      setTimeout(() => modal.style.display = "none", 3000);
+    } else {
+      status.textContent = "❌ Failed to send message.";
+      status.style.color = "red";
+    }
+  } catch (err) {
+    status.textContent = "❌ Network error.";
+    status.style.color = "red";
+  } finally {
+    btn.classList.remove("sending");
+    btn.textContent = "Send Message";
+  }
+});
+</script>
 
   </section>
 
